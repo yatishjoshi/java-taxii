@@ -493,8 +493,7 @@ public class HttpClient {
         String pollRespOpen;
         String pollRespClose;
         StringBuilder out = new StringBuilder();
-        StringBuilder remainder = new StringBuilder();
-        String data = null;
+        String data = "";
 
         bytesRead = in.read(buffer, 0, buffer.length);
         Matcher matchO = prOpen.matcher(new String(buffer));
@@ -510,29 +509,25 @@ public class HttpClient {
         }
 
         while (bytesRead >= 0) {
-            data = remainder.toString() + new String(buffer);
-            remainder = new StringBuilder();
+            data = data + new String(buffer, 0, bytesRead);
             matchO = cbOpen.matcher(data);
             matchC = cbClose.matcher(data);
 
             while (true) {
                 if (!matchO.find()) {
-                    // cb not found
-                    break;// ?
+                    //content_block opening tag not found
+                    break;
                 }
                 if (!matchC.find()) {
-                    remainder.append(data.substring(matchO.start()));
+                    data = data.substring(matchO.start());
                     blockCompleted = false;
                     break;
                 }
                 out.append(data.substring(matchO.start(), matchC.end()));
-                // out.append(buffer, matchO.start(), matchC.end() - matchO.start());
                 contentSize += matchC.end() - matchO.start();
                 blockCompleted = true;
                 if (contentSize >= blockSize) {
-                    out.insert(0, pollRespOpen);
-                    out.append(pollRespClose);
-                    writeToFile(dir, out.toString());
+                    writeToFile(dir, pollRespOpen, out.toString(), pollRespClose);
                     contentSize = 0;
                     out = new StringBuilder();
                 }
@@ -543,11 +538,9 @@ public class HttpClient {
 
         // We reached the end of stream and did not see the closing tag
         if (blockCompleted) {
-            if (out.length() > 0) {
-                out.insert(0, pollRespOpen);
-                out.append(pollRespClose);
-                writeToFile(dir, out.toString());
-            }
+            if (out.length() > 0)
+                writeToFile(dir, pollRespOpen, out.toString(), pollRespClose);
+            
             matchC = prClose.matcher(data);
             if (!matchC.find())
                 throw new EOFException("Stream terminated before closing Poll_Response");
@@ -557,7 +550,7 @@ public class HttpClient {
         in.close();
     }
 
-    public void writeToFile(String path, String data) throws IOException {
+    public void writeToFile(String path, String oTag, String data, String cTag) throws IOException {
         int writeBM = 0;
         File destDir = new File(path);
         String wBookmark = path + "/bookmark.write";
@@ -576,7 +569,9 @@ public class HttpClient {
         // write the file
         String file = path + "/block_" + writeBM + ".xml";
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        writer.write(oTag);
         writer.write(data);
+        writer.write(cTag);
         writer.close();
 
         // update write bookmark
