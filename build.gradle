@@ -24,7 +24,7 @@ apply plugin: 'signing'
 
 defaultTasks 'jar'
 
-version = "1.1.0.1"
+version = "1.1.0.2"
 // version = "0.1"
 group = "org.mitre.taxii"
 archivesBaseName = "taxii"
@@ -36,8 +36,9 @@ String srcGeneratedDir = 'src/generated'
 String srcGeneratedJavaDir = srcGeneratedDir + '/java'
 String schemasDir = srcGeneratedDir + "/schemas"
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+//use Java 8 to compile
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 sourceSets {
     main {
@@ -62,7 +63,7 @@ configurations {
 }
 
 dependencies {
-    xjc 'javax.activation:activation:1.1.1'
+    xjc 'javax.activation:activation:1.2.0'
     xjc 'com.sun.xml.bind:jaxb-impl:2.2.5-2'
     xjc 'javax.xml:jsr173:1.0'
     xjc 'stax:stax-api:1.0.1'
