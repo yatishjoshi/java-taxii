@@ -51,8 +51,8 @@ sourceSets {
 }
 
 repositories {
-    //mavenCentral()
-    flatDir 
+    mavenCentral()
+    flatDir {
         dirs 'lib'
     }
     maven { url 'https://jitpack.io' }
@@ -63,6 +63,8 @@ configurations {
 }
 
 dependencies {
+    compile 'com.github.yatishjoshi:java-taxii:v1.1.0.2-SNAPSHOT'
+	
     xjc 'com.sun.activation:javax.activation:1.2.0'
     xjc 'com.sun.xml.bind:jaxb-impl:2.2.5-2'
     xjc 'javax.xml:jsr173:1.0'
@@ -92,7 +94,6 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
     
     testCompile 'junit:junit:4.11'
-    implementation 'com.github.yatishjoshi:java-taxii:v1.1.0.2-SNAPSHOT'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
