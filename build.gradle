@@ -25,7 +25,6 @@ apply plugin: 'signing'
 defaultTasks 'jar'
 
 version = "1.1.0.2"
-// version = "0.1"
 group = "org.mitre.taxii"
 archivesBaseName = "taxii"
 
@@ -52,10 +51,11 @@ sourceSets {
 }
 
 repositories {
-    mavenCentral()
-    flatDir {
+    //mavenCentral()
+    flatDir 
         dirs 'lib'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -92,6 +92,7 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
     
     testCompile 'junit:junit:4.11'
+    implementation 'com.github.yatishjoshi:java-taxii:v1.1.0.2-SNAPSHOT'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
