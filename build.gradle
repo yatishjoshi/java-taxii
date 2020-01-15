@@ -21,7 +21,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
-apply plugin: 'groovy'
 
 defaultTasks 'jar'
 
@@ -56,6 +55,7 @@ repositories {
     flatDir {
         dirs 'lib'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -92,6 +92,8 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
     
     testCompile 'junit:junit:4.11'
+    
+    implementation 'com.github.yatishjoshi:java-taxii:v1.1.0.2-SNAPSHOT'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
