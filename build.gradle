@@ -93,7 +93,6 @@ dependencies {
     
     testCompile 'junit:junit:4.11'
     
-    implementation 'com.github.yatishjoshi:java-taxii:v1.1.0.2-SNAPSHOT'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
