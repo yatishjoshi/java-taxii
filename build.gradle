@@ -147,6 +147,8 @@ task retrieveSchemas << {
 task patchSchemas << { 
     // This should only execute if retrieveSchemas did work.
     if (retrieveSchemas.didWork) {
+
+        println "schema checking files" + project.rootDir.absolutePath
         ant.patch(patchfile: project.rootDir.absolutePath + "/" + "src/main/resources/xmldsig-core-schema.patch", originalfile: project.rootDir.absolutePath + "/" + schemasDir + "/xmldsig-core-schema.xsd")    
         ant.patch(patchfile: project.rootDir.absolutePath + "/" + "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: project.rootDir.absolutePath + "/" + schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
         ant.patch(patchfile: project.rootDir.absolutePath + "/" + "src/main/resources/TAXII_XMLMessageBinding_Schema-1.0.patch", originalfile: project.rootDir.absolutePath + "/" + schemasDir + "/TAXII_XMLMessageBinding-1.0.xsd")    
