@@ -59,6 +59,7 @@ repositories {
 
 configurations {
     xjc
+    patch
 }
 
 dependencies {
