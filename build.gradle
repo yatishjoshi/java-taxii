@@ -148,6 +148,21 @@ task retrieveSchemas << {
 task patchSchemas << { 
     // This should only execute if retrieveSchemas did work.
     if (retrieveSchemas.didWork) {
+
+        File dh = new File('src/main/resources')
+        if (dh.exists()){
+            dh.eachFile {
+                println(it)
+            }
+        }
+
+        println('Check schema dir')
+        dh = new File(schemasDir)
+        if (dh.exists()){
+            dh.eachFile {
+                println(it)
+            }
+        }
         
         ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
         ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
@@ -189,6 +204,12 @@ task generate << {
 }
 
 task cleanGenerated << {
+    File dh = new File(srcGeneratedDir)
+    if (dh.exists()){
+        dh.eachFile {
+            println(it)
+        }
+    }
     ant.delete(dir: srcGeneratedDir)
 }
 
