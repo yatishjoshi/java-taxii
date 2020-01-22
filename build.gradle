@@ -92,7 +92,7 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
     //add ant dependency for patching to succeed.
     compile 'org.apache.ant:ant:1.9.6'
-    
+    compile 'org.apache.maven.plugins:maven-patch-plugin:1.2'
     testCompile 'junit:junit:4.11'
     
 }
