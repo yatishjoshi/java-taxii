@@ -90,6 +90,8 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient-cache:4.3.5'
     compile 'org.apache.httpcomponents:httpmime:4.3.5'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
+    //add ant dependency for patching to succeed.
+    compile 'org.apache.ant:ant:1.9.6'
     
     testCompile 'junit:junit:4.11'
     
@@ -163,7 +165,7 @@ task patchSchemas << {
                 println(it)
             }
         }
-        
+
         ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
         ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
         ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.0.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.0.xsd")    
