@@ -2,10 +2,9 @@ language: java
 
 jdk:
   - oraclejdk8
-  - oraclejdk7
 
 # the below keeps 'gradle assemble' from being called which tries to sign the jars.
-install: /bin/true
+install: 
+  gradle clean -Pgroup=com.github.yatishjoshi -Pversion=v1.1.0.2-latest -xtest install
 
-script: "gradle test"
 
