@@ -21,6 +21,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
 
 defaultTasks 'jar'
 
@@ -55,7 +57,6 @@ repositories {
     flatDir {
         dirs 'lib'
     }
-    maven { url "https://jitpack.io" }
 }
 
 configurations {
@@ -83,7 +84,6 @@ dependencies {
     // with XML namespace URIs.
     xjc 'org.jvnet.jaxb2_commons:jaxb2-namespace-prefix:1.1'    
 
-    implementation 'com.github.apache:ant:1.9.6'
     compile 'javax.xml.bind:jaxb-api:2.2.11'
     compile 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.6.5'
     compile 'net.sf.saxon:Saxon-HE:9.5.1-5'
@@ -148,7 +148,6 @@ task retrieveSchemas << {
 task patchSchemas << { 
     // This should only execute if retrieveSchemas did work.
     if (retrieveSchemas.didWork) {
-
     ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
     ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
     ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.0.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.0.xsd")    
@@ -329,3 +328,22 @@ generate.dependsOn compileSchematron
 compileJava.dependsOn generate
 
 dist.dependsOn jar
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/yatishjoshi/java-taxii")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("REPOSITORY") {
+            from(components["java"])
+            artifact(tasks["fatJar"])
+        }
+    }
+}
