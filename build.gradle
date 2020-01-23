@@ -149,29 +149,11 @@ task retrieveSchemas << {
 task patchSchemas << { 
     // This should only execute if retrieveSchemas did work.
     if (retrieveSchemas.didWork) {
-
-        File dh = new File('src/main/resources')
-        if (dh.exists()){
-            dh.eachFile {
-                println(it)
-            }
-        }
-
-        println('Check schema dir')
-        dh = new File(schemasDir)
-        if (dh.exists()){
-            dh.eachFile {
-                println(it)
-            }
-        }
-
-        assemble.doFirst {
-            ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
-            ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
-            ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.0.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.0.xsd")    
-            ant.patch(patchfile: "src/main/resources/TAXII_DefaultQuery.patch", originalfile: schemasDir + "/TAXII_DefaultQuery.xsd")    
-        }
-        
+        ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
+        ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
+        ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.0.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.0.xsd")    
+        ant.patch(patchfile: "src/main/resources/TAXII_DefaultQuery.patch", originalfile: schemasDir + "/TAXII_DefaultQuery.xsd")    
+    
     } else {
         println "Schemas already exist and are presumed patched. Nothing done."
         didWork = false
