@@ -1,6 +1,9 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    tags:
+    - '*'
 
 jobs:
   build:
@@ -16,5 +19,8 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean -xtest install
       
-    - name: Deploy to Github Registry
+    - name: Publish to Github registry
+      env: 
+        GPR_USER: ${{ secrets.GPR_USER }}
+        GPR_API_KEY: ${{ secrets.GITHUB_TOKEN }}
       run: ./gradlew publish
