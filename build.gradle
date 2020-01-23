@@ -21,7 +21,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
-apply plugin: 'maven-publish'
 
 
 defaultTasks 'jar'
@@ -57,6 +56,7 @@ repositories {
     flatDir {
         dirs 'lib'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -189,12 +189,6 @@ task generate << {
 }
 
 task cleanGenerated << {
-    File dh = new File(srcGeneratedDir)
-    if (dh.exists()){
-        dh.eachFile {
-            println(it)
-        }
-    }
     ant.delete(dir: srcGeneratedDir)
 }
 
@@ -328,22 +322,3 @@ generate.dependsOn compileSchematron
 compileJava.dependsOn generate
 
 dist.dependsOn jar
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/yatishjoshi/java-taxii")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GPR_USER")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GPR_API_KEY")
-            }
-        }
-    }
-    publications {
-        create<MavenPublication>("REPOSITORY") {
-            from(components["java"])
-            artifact(tasks["fatJar"])
-        }
-    }
-}
