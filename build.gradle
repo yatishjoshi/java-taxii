@@ -52,6 +52,7 @@ sourceSets {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
     flatDir {
         dirs 'lib'
