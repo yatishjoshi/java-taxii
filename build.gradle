@@ -27,6 +27,7 @@ defaultTasks 'jar'
 version = "1.1.0.2"
 group = "org.mitre.taxii"
 archivesBaseName = "taxii"
+group = 'com.github.yatishjoshi'
 
 // def isReleaseVersion = !version.endsWith("SNAPSHOT")
 def taxiiSchemaVersion = "1.1 & 1.0"
@@ -55,7 +56,6 @@ repositories {
     flatDir {
         dirs 'lib'
     }
-    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -90,9 +90,6 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient-cache:4.3.5'
     compile 'org.apache.httpcomponents:httpmime:4.3.5'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
-    //add ant dependency for patching to succeed.
-    compile 'org.apache.ant:ant:1.9.6'
-    compile 'org.apache.maven.plugins:maven-patch-plugin:1.2'
     testCompile 'junit:junit:4.11'
     
 }
