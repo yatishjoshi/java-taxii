@@ -83,6 +83,7 @@ dependencies {
     // with XML namespace URIs.
     xjc 'org.jvnet.jaxb2_commons:jaxb2-namespace-prefix:1.1'    
 
+    implementation 'com.github.apache:ant:1.9.6'
     compile 'javax.xml.bind:jaxb-api:2.2.11'
     compile 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.6.5'
     compile 'net.sf.saxon:Saxon-HE:9.5.1-5'
@@ -147,7 +148,6 @@ task retrieveSchemas << {
 task patchSchemas << { 
     // This should only execute if retrieveSchemas did work.
     if (retrieveSchemas.didWork) {
-
 
     ant.patch(patchfile: "src/main/resources/xmldsig-core-schema.patch", originalfile: schemasDir + "/xmldsig-core-schema.xsd")    
     ant.patch(patchfile: "src/main/resources/TAXII_XMLMessageBinding_Schema-1.1.patch", originalfile: schemasDir + "/TAXII_XMLMessageBinding-1.1.xsd")    
