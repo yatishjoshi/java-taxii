@@ -1,9 +1,11 @@
-jdk:
-  - openjdk8
+language: java
 
-before_install:
-   - ./custom_setup.sh
-install:
-   - echo "Running a custom install command"
-   - ./gradlew clean -xtest --install
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+
+# the below keeps 'gradle assemble' from being called which tries to sign the jars.
+install: /bin/true
+
+script: "gradle test"
 
