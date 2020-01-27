@@ -24,8 +24,10 @@ apply plugin: 'signing'
 
 
 defaultTasks 'jar'
+
 version = "1.1.0.2"
-group = "org.mitre.taxii"
+group = "com.github.yatishjoshi"
+//group = "org.mitre.taxii"
 archivesBaseName = "taxii"
 
 // def isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -91,7 +93,6 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.3.5'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.5'
     testCompile 'junit:junit:4.11'
-    implementation 'com.github.yatishjoshi:java-taxii:1.1.0.2'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
