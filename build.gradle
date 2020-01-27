@@ -25,8 +25,7 @@ apply plugin: 'signing'
 
 defaultTasks 'jar'
 version = "1.1.0.2"
-group = 'com.github.yatishjoshi'
-//group = "org.mitre.taxii"
+group = "org.mitre.taxii"
 archivesBaseName = "taxii"
 
 // def isReleaseVersion = !version.endsWith("SNAPSHOT")
