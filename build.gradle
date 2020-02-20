@@ -57,7 +57,7 @@ repositories {
     flatDir {
         dirs 'lib'
     }
-    maven { url 'https://jitpack.io' }
+    //maven { url 'https://jitpack.io' }
 }
 
 configurations {
